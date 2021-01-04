@@ -1,0 +1,22 @@
+#!/usr/bin/python
+
+import sys, getpass, re
+
+class bcolors:
+    OKGREEN = '\033[92m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+
+ret = 1
+try:
+    with open(sys.argv[1]) as msg:
+        res = re.match("(^(feat|fix|style|test|refactor|perf|docs)\([\w-]+\): [\w\s]+)|(^chore: [\w\s]+)|(^(Merge branch|Merge remote-tracking branch))", msg.readline())
+        if res != None: 
+            ret = 0
+except:
+    pass
+if (ret != 0):
+    print("Dear user "+"\""+getpass.getuser()+"\""+" we have a problem:"+bcolors.FAIL+" your commit message does not follow the pattern"+bcolors.BOLD+bcolors.OKGREEN+"'(^(feat|fix|style|test|refactor|perf|docs)\([\w-]+\): [\w\s]+)|(^chore: [\w\s]+)|(^(Merge branch|Merge remote-tracking branch)) "+bcolors.ENDC)
+sys.exit(ret)
+
